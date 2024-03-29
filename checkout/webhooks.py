@@ -11,6 +11,7 @@ import stripe
 @require_POST
 @csrf_exempt
 def webhook(request):
+    print("Webhook received!")
     """Listen for webhooks from Stripe"""
     # Setup
     wh_secret = settings.STRIPE_WH_SECRET
@@ -24,7 +25,7 @@ def webhook(request):
     try:
         event = stripe.Webhook.construct_event(
             payload, sig_header, wh_secret
-            )
+        )
     except ValueError as e:
         # Invalid payload
         return HttpResponse(status=400)
